@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import CosmicBadge from '@/components/CosmicBadge'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -35,6 +36,7 @@ export default function RootLayout({
         {children}
         {/* Pass bucket slug as prop to client component */}
         <CosmicBadge bucketSlug={bucketSlug} />
+        <Toaster />
       </body>
     </html>
   )

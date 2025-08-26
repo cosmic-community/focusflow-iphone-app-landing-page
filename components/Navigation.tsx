@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Menu, X } from 'lucide-react'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -36,45 +38,31 @@ export default function Navigation() {
                   {item.name}
                 </Link>
               ))}
-              <Link
-                href="#beta-signup"
-                className="bg-gray-900 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-200"
-              >
-                Get the App
-              </Link>
+              <Button asChild>
+                <Link
+                  href="#beta-signup"
+                  className="bg-gray-900 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-200"
+                >
+                  Get the App
+                </Link>
+              </Button>
             </div>
           </div>
           
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500"
               aria-label="Toggle menu"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
           </div>
         </div>
         
@@ -92,13 +80,15 @@ export default function Navigation() {
                   {item.name}
                 </Link>
               ))}
-              <Link
-                href="#beta-signup"
-                className="bg-gray-900 text-white block text-center px-6 py-3 rounded-full font-medium mt-4"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Get the App
-              </Link>
+              <Button asChild className="w-full mt-4">
+                <Link
+                  href="#beta-signup"
+                  className="bg-gray-900 text-white block text-center px-6 py-3 rounded-full font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Get the App
+                </Link>
+              </Button>
             </div>
           </div>
         )}

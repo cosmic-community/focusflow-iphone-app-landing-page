@@ -2,6 +2,9 @@
 
 import { LandingPage } from '@/types'
 import BetaSignupForm from '@/components/BetaSignupForm'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Play } from 'lucide-react'
 
 interface HeroSectionProps {
   landingPage: LandingPage
@@ -41,26 +44,24 @@ export default function HeroSection({ landingPage }: HeroSectionProps) {
             
             {/* Email signup */}
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:mx-0">
-              <input
+              <Input
                 type="email"
                 placeholder="Type your email"
-                className="flex-1 px-6 py-4 rounded-full bg-white/80 backdrop-blur-sm border border-white/50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
+                className="flex-1 px-6 py-4 rounded-full bg-white/80 backdrop-blur-sm border-white/50 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-purple-500/50 focus:border-transparent h-14"
               />
-              <button className="bg-gray-900 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-200 whitespace-nowrap">
+              <Button className="bg-gray-900 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-200 whitespace-nowrap h-14">
                 Get the App
-              </button>
+              </Button>
             </div>
             
             {/* Quick tour link */}
             <div className="mt-16">
-              <button className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors mx-auto lg:mx-0">
+              <Button variant="ghost" className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors mx-auto lg:mx-0 px-0">
                 <div className="w-8 h-8 rounded-full bg-white/60 flex items-center justify-center">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                  </svg>
+                  <Play className="w-4 h-4" />
                 </div>
                 <span className="font-medium">Take a Quick Tour</span>
-              </button>
+              </Button>
             </div>
           </div>
           
