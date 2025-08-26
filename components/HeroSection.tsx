@@ -1,7 +1,9 @@
 'use client'
 
-import { LandingPage } from '@/types'
+import { ArrowDown, Play, Smartphone } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import BetaSignupForm from '@/components/BetaSignupForm'
+import { LandingPage } from '@/types'
 
 interface HeroSectionProps {
   landingPage: LandingPage
@@ -9,86 +11,119 @@ interface HeroSectionProps {
 
 export default function HeroSection({ landingPage }: HeroSectionProps) {
   const { metadata } = landingPage
-  const featuredImage = metadata.app_screenshots?.[0]
+  
+  const scrollToBetaSignup = () => {
+    document.getElementById('beta-signup')?.scrollIntoView({ behavior: 'smooth' })
+  }
+  
+  const scrollToAbout = () => {
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+  }
   
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Gradient background */}
-      <div className="absolute inset-0 hero-gradient"></div>
+    <section className="relative min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-100/30 to-blue-100/30"></div>
+      <div className="absolute top-10 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+      <div className="absolute bottom-10 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
       
-      {/* Decorative elements */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-200/30 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl"></div>
-      
-      {/* Content */}
-      <div className="relative z-10 container-max section-padding py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left side - Content */}
-          <div className="text-center lg:text-left animate-fade-in-up">
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight">
-              Focus on managing{' '}
-              <span className="gradient-text">your</span>
-              <br />
-              <span className="gradient-text">Productivity</span>{' '}
-              instead of managing
-              <br />
-              numerous <span className="gradient-text">Apps</span>.
-            </h1>
-            
-            <p className="text-xl text-gray-700 mb-12 leading-relaxed max-w-lg">
-              {metadata.hero_description}
-            </p>
-            
-            {/* Email signup */}
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:mx-0">
-              <input
-                type="email"
-                placeholder="Type your email"
-                className="flex-1 px-6 py-4 rounded-full bg-white/80 backdrop-blur-sm border border-white/50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
-              />
-              <button className="bg-gray-900 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-200 whitespace-nowrap">
-                Get the App
-              </button>
+      <div className="relative container mx-auto px-6 pt-20 pb-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+          {/* Left Content */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <div className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
+                  <Smartphone className="w-4 h-4 inline mr-1" />
+                  iPhone App
+                </div>
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                {metadata.hero_tagline}
+              </h1>
+              
+              <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg">
+                {metadata.hero_description}
+              </p>
             </div>
             
-            {/* Quick tour link */}
-            <div className="mt-16">
-              <button className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors mx-auto lg:mx-0">
-                <div className="w-8 h-8 rounded-full bg-white/60 flex items-center justify-center">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <span className="font-medium">Take a Quick Tour</span>
-              </button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                size="xl" 
+                variant="gradient"
+                onClick={scrollToBetaSignup}
+              >
+                Join Beta Testing
+              </Button>
+              
+              <Button 
+                size="xl" 
+                variant="glass"
+                onClick={scrollToAbout}
+              >
+                <Play className="w-5 h-5 mr-2" />
+                Watch Demo
+              </Button>
+            </div>
+            
+            <div className="flex items-center space-x-6 text-sm text-gray-500">
+              <div className="flex items-center space-x-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span>2,500+ Beta Users</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>4.8★ Rating</span>
+              </div>
             </div>
           </div>
           
-          {/* Right side - iPhone mockup */}
-          <div className="flex justify-center lg:justify-end animate-float">
-            {featuredImage && (
-              <div className="relative">
-                <div className="w-80 h-[640px] bg-black rounded-[3.5rem] p-2 shadow-2xl shadow-black/20">
-                  <div className="w-full h-full rounded-[3rem] overflow-hidden">
-                    <img
-                      src={`${featuredImage.imgix_url}?w=640&h=1280&fit=crop&auto=format,compress`}
-                      alt={`${metadata.app_name} App Screenshot`}
-                      className="w-full h-full object-cover"
-                      width="320"
-                      height="640"
-                    />
-                  </div>
-                </div>
-                
-                {/* Floating notification elements */}
-                <div className="absolute -top-6 -left-6 w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
-                <div className="absolute top-1/4 -right-8 w-3 h-3 bg-purple-400 rounded-full animate-ping"></div>
-                <div className="absolute bottom-1/3 -left-8 w-5 h-5 bg-pink-400 rounded-full animate-bounce"></div>
-              </div>
-            )}
+          {/* Right Content - Beta Signup Form */}
+          <div className="lg:mt-0">
+            <BetaSignupForm />
           </div>
         </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={scrollToAbout}
+            className="rounded-full"
+          >
+            <ArrowDown className="w-5 h-5" />
+          </Button>
+        </div>
       </div>
+      
+      {/* Phone mockups */}
+      {metadata.app_screenshots && metadata.app_screenshots.length > 0 && (
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 hidden xl:block">
+          <div className="relative">
+            {metadata.app_screenshots.slice(0, 3).map((screenshot, index) => (
+              <div
+                key={index}
+                className={`absolute w-48 h-96 bg-white rounded-[2.5rem] p-2 shadow-2xl transition-all duration-500 ${
+                  index === 0 ? 'z-30 translate-x-0' : 
+                  index === 1 ? 'z-20 translate-x-8 translate-y-4' :
+                  'z-10 translate-x-16 translate-y-8'
+                }`}
+                style={{
+                  transform: `translateX(${index * 32}px) translateY(${index * 16}px) rotate(${index * 2}deg)`
+                }}
+              >
+                <img
+                  src={`${screenshot.imgix_url}?w=400&h=800&fit=crop&auto=format,compress`}
+                  alt={`FocusFlow screenshot ${index + 1}`}
+                  className="w-full h-full object-cover rounded-[2rem]"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   )
 }

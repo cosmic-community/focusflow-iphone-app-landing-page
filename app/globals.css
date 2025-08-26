@@ -1,145 +1,127 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
+ 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
+ 
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
+ 
     --secondary: 210 40% 96%;
     --secondary-foreground: 222.2 84% 4.9%;
+ 
     --muted: 210 40% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
+ 
     --accent: 210 40% 96%;
     --accent-foreground: 222.2 84% 4.9%;
+ 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
+ 
     --radius: 0.5rem;
   }
-
+ 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+ 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
+ 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
+ 
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
+ 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
+ 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
+ 
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
+ 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+ 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
 }
-
+ 
 @layer base {
   * {
     @apply border-border;
   }
-  
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-@layer utilities {
-  .border-border {
-    border-color: hsl(var(--border));
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom focus styles */
+.focus\:ring-purple-500\/20:focus {
+  --tw-ring-color: rgb(168 85 247 / 0.2);
+}
+
+/* Animation utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  
-  /* Modern gradient backgrounds */
-  .hero-gradient {
-    background: linear-gradient(135deg, 
-      #fce7f3 0%,
-      #fbcfe8 25%, 
-      #f3e8ff 50%,
-      #e0e7ff 75%,
-      #dbeafe 100%
-    );
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .gradient-text {
-    background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Glass morphism utilities */
+.glass {
+  @apply bg-white/10 backdrop-blur-sm border border-white/20;
+}
+
+.glass-dark {
+  @apply bg-black/10 backdrop-blur-sm border border-black/20;
+}
+
+/* Loading state */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, transparent 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.5s ease infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 50%;
   }
-  
-  /* Container utilities */
-  .container-max {
-    @apply max-w-7xl mx-auto;
-  }
-  
-  .section-padding {
-    @apply px-4 sm:px-6 lg:px-8;
-  }
-  
-  /* Button styles */
-  .btn-primary {
-    @apply bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-all duration-200 inline-flex items-center justify-center;
-  }
-  
-  .btn-secondary {
-    @apply bg-white text-gray-900 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-all duration-200 border border-gray-200 inline-flex items-center justify-center;
-  }
-  
-  /* Animations */
-  .animate-fade-in {
-    animation: fadeIn 1s ease-out;
-  }
-  
-  .animate-fade-in-up {
-    animation: fadeInUp 1s ease-out;
-  }
-  
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
+  100% {
+    background-position: 0% 50%;
   }
 }

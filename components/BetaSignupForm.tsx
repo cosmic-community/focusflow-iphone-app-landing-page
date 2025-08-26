@@ -2,18 +2,41 @@
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+import { CheckCircle, Loader2, Mail, User, MessageSquare } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { useToast } from '@/hooks/use-toast'
 import { BetaSignupFormData } from '@/types'
+
+const formSchema = z.object({
+  fullName: z.string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters'),
+  email: z.string()
+    .email('Please enter a valid email address')
+    .min(5, 'Email must be at least 5 characters'),
+  message: z.string()
+    .max(500, 'Message must be less than 500 characters')
+    .optional()
+})
 
 export default function BetaSignupForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const { toast } = useToast()
   
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<BetaSignupFormData>()
+  } = useForm<BetaSignupFormData>({
+    resolver: zodResolver(formSchema)
+  })
   
   const onSubmit = async (data: BetaSignupFormData) => {
     setIsSubmitting(true)
@@ -29,14 +52,25 @@ export default function BetaSignupForm() {
       })
       
       if (!response.ok) {
-        throw new Error('Failed to submit signup')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to submit signup')
       }
       
       setSubmitStatus('success')
+      toast({
+        title: "Welcome to FocusFlow! 🎉",
+        description: "We'll notify you when beta testing begins.",
+        variant: "success",
+      })
       reset()
     } catch (error) {
       console.error('Signup error:', error)
       setSubmitStatus('error')
+      toast({
+        title: "Something went wrong",
+        description: error instanceof Error ? error.message : "Please try again later.",
+        variant: "destructive",
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -44,78 +78,102 @@ export default function BetaSignupForm() {
   
   if (submitStatus === 'success') {
     return (
-      <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 text-center border border-white/50">
-        <div className="text-gray-900 mb-4">
-          <svg className="w-16 h-16 mx-auto mb-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center border border-white/50 shadow-xl">
+        <div className="text-green-600 mb-4">
+          <CheckCircle className="w-16 h-16 mx-auto mb-4" />
         </div>
         <h3 className="text-2xl font-bold text-gray-900 mb-2">Thanks for signing up!</h3>
         <p className="text-gray-700">We'll notify you when FocusFlow is ready for beta testing.</p>
+        <Button 
+          variant="ghost" 
+          onClick={() => setSubmitStatus('idle')}
+          className="mt-4"
+        >
+          Sign up another person
+        </Button>
       </div>
     )
   }
   
   return (
-    <div id="beta-signup" className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50">
-      <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Join the Beta</h3>
+    <div id="beta-signup" className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-white/50 shadow-xl">
+      <div className="text-center mb-6">
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">Join the Beta</h3>
+        <p className="text-gray-600">Be among the first to experience FocusFlow</p>
+      </div>
       
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <div>
-          <input
+        <div className="space-y-2">
+          <Label htmlFor="fullName" className="text-gray-700 font-medium">
+            <User className="w-4 h-4 inline mr-2" />
+            Full Name
+          </Label>
+          <Input
+            id="fullName"
             type="text"
-            placeholder="Full Name"
-            className="w-full px-6 py-4 rounded-2xl bg-white/80 text-gray-900 placeholder-gray-500 border border-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all"
-            {...register('fullName', { 
-              required: 'Full name is required',
-              minLength: { value: 2, message: 'Name must be at least 2 characters' }
-            })}
+            placeholder="Enter your full name"
+            className="h-12 px-4 rounded-xl bg-white/90 border-gray-200 focus:border-purple-500 focus:ring-purple-500/20"
+            {...register('fullName')}
           />
           {errors.fullName && (
-            <p className="text-red-500 text-sm mt-2">{errors.fullName.message}</p>
+            <p className="text-red-500 text-sm">{errors.fullName.message}</p>
           )}
         </div>
         
-        <div>
-          <input
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-gray-700 font-medium">
+            <Mail className="w-4 h-4 inline mr-2" />
+            Email Address
+          </Label>
+          <Input
+            id="email"
             type="email"
-            placeholder="Email Address"
-            className="w-full px-6 py-4 rounded-2xl bg-white/80 text-gray-900 placeholder-gray-500 border border-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all"
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: 'Please enter a valid email address'
-              }
-            })}
+            placeholder="Enter your email address"
+            className="h-12 px-4 rounded-xl bg-white/90 border-gray-200 focus:border-purple-500 focus:ring-purple-500/20"
+            {...register('email')}
           />
           {errors.email && (
-            <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
           )}
         </div>
         
-        <div>
-          <textarea
-            placeholder="Tell us why you're interested (optional)"
+        <div className="space-y-2">
+          <Label htmlFor="message" className="text-gray-700 font-medium">
+            <MessageSquare className="w-4 h-4 inline mr-2" />
+            Why are you interested? (Optional)
+          </Label>
+          <Textarea
+            id="message"
+            placeholder="Tell us what excites you about FocusFlow..."
             rows={4}
-            className="w-full px-6 py-4 rounded-2xl bg-white/80 text-gray-900 placeholder-gray-500 border border-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all resize-none"
+            className="px-4 py-3 rounded-xl bg-white/90 border-gray-200 focus:border-purple-500 focus:ring-purple-500/20 resize-none"
             {...register('message')}
           />
+          {errors.message && (
+            <p className="text-red-500 text-sm">{errors.message.message}</p>
+          )}
         </div>
         
-        <button
+        <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-gray-900 text-white py-4 px-6 rounded-2xl font-semibold hover:bg-gray-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          size="xl"
+          variant="gradient"
+          className="w-full"
         >
-          {isSubmitting ? 'Submitting...' : 'Get Early Access'}
-        </button>
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Joining Beta...
+            </>
+          ) : (
+            'Get Early Access'
+          )}
+        </Button>
         
-        {submitStatus === 'error' && (
-          <p className="text-red-500 text-sm text-center">
-            Something went wrong. Please try again.
-          </p>
-        )}
+        <p className="text-xs text-gray-500 text-center">
+          By signing up, you agree to receive updates about FocusFlow's beta launch.
+        </p>
       </form>
     </div>
   )
