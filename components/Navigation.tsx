@@ -14,13 +14,13 @@ export default function Navigation() {
   ]
   
   return (
-    <nav className="bg-white/95 backdrop-blur-sm border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-white/20 fixed top-0 left-0 right-0 z-50">
       <div className="container-max section-padding">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-gray-900">
-              FocusFlow
+            <Link href="/" className="gradient-text text-3xl font-bold tracking-tight">
+              focusflow
             </Link>
           </div>
           
@@ -38,7 +38,7 @@ export default function Navigation() {
               ))}
               <Link
                 href="#beta-signup"
-                className="btn-primary"
+                className="bg-gray-900 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-200"
               >
                 Get the App
               </Link>
@@ -49,7 +49,7 @@ export default function Navigation() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+              className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500"
               aria-label="Toggle menu"
             >
               <svg
@@ -81,7 +81,7 @@ export default function Navigation() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-md border-t border-white/20 rounded-b-2xl">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
@@ -94,7 +94,7 @@ export default function Navigation() {
               ))}
               <Link
                 href="#beta-signup"
-                className="btn-primary block text-center mt-4"
+                className="bg-gray-900 text-white block text-center px-6 py-3 rounded-full font-medium mt-4"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Get the App

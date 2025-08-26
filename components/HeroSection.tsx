@@ -12,26 +12,55 @@ export default function HeroSection({ landingPage }: HeroSectionProps) {
   const featuredImage = metadata.app_screenshots?.[0]
   
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Gradient background */}
       <div className="absolute inset-0 hero-gradient"></div>
       
+      {/* Decorative elements */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-200/30 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl"></div>
+      
       {/* Content */}
       <div className="relative z-10 container-max section-padding py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left side - Content */}
-          <div className="text-center lg:text-left animate-fade-in">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 text-balance">
-              {metadata.hero_tagline}
+          <div className="text-center lg:text-left animate-fade-in-up">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight">
+              Focus on managing{' '}
+              <span className="gradient-text">your</span>
+              <br />
+              <span className="gradient-text">Productivity</span>{' '}
+              instead of managing
+              <br />
+              numerous <span className="gradient-text">Apps</span>.
             </h1>
             
-            <p className="text-xl text-white/90 mb-8 leading-relaxed">
+            <p className="text-xl text-gray-700 mb-12 leading-relaxed max-w-lg">
               {metadata.hero_description}
             </p>
             
-            {/* Beta signup form */}
-            <div className="max-w-md mx-auto lg:mx-0">
-              <BetaSignupForm />
+            {/* Email signup */}
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:mx-0">
+              <input
+                type="email"
+                placeholder="Type your email"
+                className="flex-1 px-6 py-4 rounded-full bg-white/80 backdrop-blur-sm border border-white/50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
+              />
+              <button className="bg-gray-900 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-200 whitespace-nowrap">
+                Get the App
+              </button>
+            </div>
+            
+            {/* Quick tour link */}
+            <div className="mt-16">
+              <button className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors mx-auto lg:mx-0">
+                <div className="w-8 h-8 rounded-full bg-white/60 flex items-center justify-center">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="font-medium">Take a Quick Tour</span>
+              </button>
             </div>
           </div>
           
@@ -39,37 +68,26 @@ export default function HeroSection({ landingPage }: HeroSectionProps) {
           <div className="flex justify-center lg:justify-end animate-float">
             {featuredImage && (
               <div className="relative">
-                <div className="w-72 h-[580px] bg-black rounded-[3rem] p-2 shadow-2xl">
-                  <div className="w-full h-full rounded-[2.5rem] overflow-hidden">
+                <div className="w-80 h-[640px] bg-black rounded-[3.5rem] p-2 shadow-2xl shadow-black/20">
+                  <div className="w-full h-full rounded-[3rem] overflow-hidden">
                     <img
-                      src={`${featuredImage.imgix_url}?w=600&h=1200&fit=crop&auto=format,compress`}
+                      src={`${featuredImage.imgix_url}?w=640&h=1280&fit=crop&auto=format,compress`}
                       alt={`${metadata.app_name} App Screenshot`}
                       className="w-full h-full object-cover"
-                      width="300"
-                      height="600"
+                      width="320"
+                      height="640"
                     />
                   </div>
                 </div>
                 
-                {/* Floating elements */}
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-white/20 rounded-full blur-xl"></div>
-                <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                {/* Floating notification elements */}
+                <div className="absolute -top-6 -left-6 w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="absolute top-1/4 -right-8 w-3 h-3 bg-purple-400 rounded-full animate-ping"></div>
+                <div className="absolute bottom-1/3 -left-8 w-5 h-5 bg-pink-400 rounded-full animate-bounce"></div>
               </div>
             )}
           </div>
         </div>
-      </div>
-      
-      {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg
-          className="w-full h-16 text-white"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          fill="currentColor"
-        >
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
-        </svg>
       </div>
     </section>
   )
