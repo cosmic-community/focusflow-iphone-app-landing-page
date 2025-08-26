@@ -1,3 +1,5 @@
+'use client'
+
 import { ArrowDown, Play, Smartphone } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import BetaSignupForm from '@/components/BetaSignupForm'
@@ -9,6 +11,14 @@ interface HeroSectionProps {
 
 export default function HeroSection({ landingPage }: HeroSectionProps) {
   const { metadata } = landingPage
+  
+  const scrollToBetaSignup = () => {
+    document.getElementById('beta-signup')?.scrollIntoView({ behavior: 'smooth' })
+  }
+  
+  const scrollToAbout = () => {
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+  }
   
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 overflow-hidden">
@@ -42,7 +52,7 @@ export default function HeroSection({ landingPage }: HeroSectionProps) {
               <Button 
                 size="xl" 
                 variant="gradient"
-                onClick={() => document.getElementById('beta-signup')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={scrollToBetaSignup}
               >
                 Join Beta Testing
               </Button>
@@ -50,7 +60,7 @@ export default function HeroSection({ landingPage }: HeroSectionProps) {
               <Button 
                 size="xl" 
                 variant="glass"
-                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={scrollToAbout}
               >
                 <Play className="w-5 h-5 mr-2" />
                 Watch Demo
@@ -80,7 +90,7 @@ export default function HeroSection({ landingPage }: HeroSectionProps) {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={scrollToAbout}
             className="rounded-full"
           >
             <ArrowDown className="w-5 h-5" />
