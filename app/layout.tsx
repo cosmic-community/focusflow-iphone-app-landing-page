@@ -1,21 +1,44 @@
-import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Toaster } from '@/components/Toaster'
 import CosmicBadge from '@/components/CosmicBadge'
-import { Toaster } from '@/components/ui/toaster'
+import './globals.css'
 
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap',
-})
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'FocusFlow - Master Your Focus, Amplify Your Productivity',
   description: 'FocusFlow is the revolutionary iPhone app that combines cutting-edge neuroscience with beautiful design to help you achieve deep focus and peak productivity.',
-  keywords: 'productivity, focus, iPhone app, neuroscience, deep work, time management',
+  keywords: 'focus, productivity, iPhone app, neuroscience, deep work, concentration',
   authors: [{ name: 'FocusFlow Team' }],
-  viewport: 'width=device-width, initial-scale=1',
-  robots: 'index, follow',
+  creator: 'FocusFlow',
+  publisher: 'FocusFlow Inc.',
+  openGraph: {
+    title: 'FocusFlow - Master Your Focus, Amplify Your Productivity',
+    description: 'Join thousands of users who have transformed their work habits with FocusFlow.',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FocusFlow - Master Your Focus, Amplify Your Productivity',
+    description: 'Join thousands of users who have transformed their work habits with FocusFlow.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+  }
 }
 
 export default function RootLayout({
@@ -23,20 +46,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Access environment variable on server side
   const bucketSlug = process.env.COSMIC_BUCKET_SLUG as string
   
   return (
     <html lang="en">
       <head>
+        <script src="/dashboard-console-capture.js" defer />
         {/* Console capture script for dashboard debugging */}
-        <script src="/dashboard-console-capture.js"></script>
       </head>
       <body className={inter.className}>
         {children}
-        {/* Pass bucket slug as prop to client component */}
-        <CosmicBadge bucketSlug={bucketSlug} />
         <Toaster />
+        <CosmicBadge bucketSlug={bucketSlug} />
       </body>
     </html>
   )
